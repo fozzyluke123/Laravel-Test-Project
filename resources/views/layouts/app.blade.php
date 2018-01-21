@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Datatable - @yield('title')</title>
+        <title>Laravel Test - @yield('title')</title>
         <link href="/css/app.css" rel="stylesheet">
     </head>
     <body>

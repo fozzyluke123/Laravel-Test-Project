@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://datatable.local'),
+    'url' => env('APP_URL', 'http://laravel-test.local'),
 
     /*
     |--------------------------------------------------------------------------
