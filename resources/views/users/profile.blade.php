@@ -9,18 +9,33 @@
             {{ Form::open() }}
                 <div class="form-group">
                     {{ Form::label('username', 'Username') }}
-                    {{ Form::text('username', $user->username, array('class' => 'form-control')) }}
+                    {{ Form::text('username', $user->username, array('class' => 'form-control', 'required')) }}
                 </div>
+                @foreach ($errors->get('username') as $error)
+                    <div class="formError">
+                        {{ $error }}
+                    </div>
+                @endforeach
                 <div class="form-group">
                     {{ Form::label('email', 'Email') }}
-                    {{ Form::text('email', $user->email, array('class' => 'form-control')) }}
+                    {{ Form::email('email', $user->email, array('class' => 'form-control', 'required')) }}
                 </div>
+                @foreach ($errors->get('email') as $error)
+                    <div class="formError">
+                        {{ $error }}
+                    </div>
+                @endforeach
                 <div class="form-group">
                     {{ Form::label('dob', 'Date of Birth') }}
-                    {{ Form::text('dob', $user->dob, array('class' => 'form-control')) }}
+                    {{ Form::date('dob', $user->dob, array('class' => 'form-control', 'required')) }}
                 </div>
+                @foreach ($errors->get('dob') as $error)
+                    <div class="formError">
+                        {{ $error }}
+                    </div>
+                @endforeach
                 {{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
-                {{ Form::hidden('id', $user->id, array('class' => 'form-control')) }}
+                {{ Form::hidden('id', $user->id) }}
             {{ Form::close() }}
         </div>
         <div class="col-xs-12">

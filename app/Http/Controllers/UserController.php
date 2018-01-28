@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use DB;
 use Request;
+use Validator;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
+use Carbon;
 
 class UserController extends Controller
 {
@@ -28,6 +31,29 @@ class UserController extends Controller
      */
     public function update($id)
     {
+        //validate the inputs
+        $validator = Validator::make(Request::all(), [
+            'username' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+                "max:50"
+            ],
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+                'max:50',
+                'email'
+            ],
+            'dob' => [
+                'required',
+                'before:today'
+            ]
+        ]);
+        if ($validator->fails()) {
+            return redirect('users/' . $id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $update = User::where('id', Request::input("id"))->update(array(
 			'username' 	  =>  Request::input("username"),
 			'email' => Request::input("email"),
@@ -49,6 +75,11 @@ class UserController extends Controller
      */
     public function add()
     {
+        $validatedData = Request::validate([
+            'username' => 'required|unique:users|max:50',
+            'email' => 'required|unique:users|max:50|email',
+            'dob' => 'required|before:today',
+        ]);
         $add = DB::table('users')->insertGetID(
             [
                 'username' => Request::input("username"), 
