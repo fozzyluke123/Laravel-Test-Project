@@ -11,12 +11,8 @@
 |
 */
 
-Route::get("", function()
-{
-    return "Hi there, please go <a href='/users'>here!</a>";
-});
+Route::match(['get', 'post'], '/', 'UserController@login');
 Route::get('/users', 'UserController@index')->name("users");
-Route::get('/users/new', 'UserController@new')->name("users.new");
-Route::post('/users/new', 'UserController@add');
-Route::post('/users/{id}', 'UserController@update')->name("users.profile");
-Route::get('/users/{id}', 'UserController@show');
+Route::get('/logout', 'UserController@logout');
+Route::match(['get', 'post'], '/users/new', 'UserController@new')->name("users.new");
+Route::match(['get', 'post'], '/users/{id}', 'UserController@update')->name("users.profile");
